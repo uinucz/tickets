@@ -1,0 +1,43 @@
+.active {
+  color: rgb(0, 0, 0);
+}
+
+.btn {
+  border-radius: 0 !important;
+}
+body {
+  background-color: rgb(255, 255, 255);
+}
+
+/* #circle {
+  width: 20px;
+  height: 20px;
+  background: rgb(104, 192, 243);
+  border-radius: 50%;
+} */
+
+#circle {
+  height: 1vw;
+  width: 1vw;
+  border-radius: 0;
+  border: 2px solid rgb(0, 0, 0);
+
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#circlePicked {
+  height: 1vw;
+  width: 1vw;
+  border-radius: 0;
+  background: rgb(2, 117, 216);
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.theater {
+  display: flex;
+  align-items: center;
+}
