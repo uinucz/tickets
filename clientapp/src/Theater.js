@@ -12,6 +12,7 @@ export default function Theater() {
       return x
     })
   }
+  //edit
   return (
     <Fragment>
       <Container
