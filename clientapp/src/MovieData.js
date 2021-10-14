@@ -3,13 +3,9 @@ import { Container, Image } from "react-bootstrap"
 import { observer } from "mobx-react-lite"
 import { store, StoreContext, useStore } from "./Users/store"
 
-const MovieData = ({ movieData }) =>{
-	const { userStore } = useStore()
-
+const MovieData = ({ movieData }) => {
 	return (
 		<Container style={{ display: "flex", flexDirection: "row" }}>
-			{userStore.isLoggedin ? <h1>LOGGGGEDIN</h1> : <h1>not logged in</h1>}
-			<p onClick={()=>userStore.increase()} className="font-italic">{userStore.userNumber}</p>
 			<Image
 				src={movieData.pic}
 				rounded
@@ -24,4 +20,4 @@ const MovieData = ({ movieData }) =>{
 		</Container>
 	)
 }
-export default observer( MovieData)
+export default observer(MovieData)

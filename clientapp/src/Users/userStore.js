@@ -10,7 +10,7 @@ export default class UserStore {
 	appLoaded = false
 	userNumber = 0
 
-	consctructor() {
+	constructor() {
 		makeAutoObservable(this)
 	}
 
