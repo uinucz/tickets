@@ -8,11 +8,16 @@ export default class UserStore {
 	user = null
 	//token = null
 	appLoaded = false
+	userNumber = 0
 
 	consctructor() {
 		makeAutoObservable(this)
 	}
 
+	increase = () => {
+		this.userNumber = this.userNumber += 1
+		console.log(this.userNumber)
+	}
 	get isLoggedin() {
 		return !!this.user
 	}
@@ -21,6 +26,7 @@ export default class UserStore {
 		try {
 			const user = await userService.login(creds)
 			store.commonStore.setToken(user.token)
+			window.localStorage.setItem("jwt", user.token)
 			runInAction(() => (this.user = user))
 			console.log("logged in")
 		} catch (error) {

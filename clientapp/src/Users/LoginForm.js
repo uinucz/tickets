@@ -35,8 +35,9 @@ export default observer(function LoginForm() {
 							name="error"
 							render={() => <Alert variant="primary">{errors.error}</Alert>}
 						/>
+						
 						<Button variant="success" type="submit">
-							Войти
+						{isSubmitting ? <>...</>:<>войти</>}
 						</Button>
 					</Form>
 				)}

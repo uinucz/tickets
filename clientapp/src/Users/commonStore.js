@@ -4,6 +4,7 @@ export default class CommonStore {
 	error = null
 	token = window.localStorage.getItem("jwt")
 	appLoaded = false
+	commonNumber = 0
 
 	constructor() {
 		makeAutoObservable(this)
