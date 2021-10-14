@@ -15,6 +15,9 @@ using Npgsql;
 using Microsoft.EntityFrameworkCore;
 using moviebooking.Data;
 using moviebooking.Repositories;
+using moviebooking.Extensions;
+ using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace moviebooking
 {
@@ -30,8 +33,20 @@ namespace moviebooking
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
-            services.AddControllers();
+            services.AddCors(opt=>
+            {
+                opt.AddPolicy("CorsPolicy", policy =>
+                {
+                    policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
+                });
+            });
+            services.AddControllers(
+            //    opt=>
+            //{
+            //    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+            //    opt.Filters.Add(new AuthorizeFilter(policy)); ;
+            //}
+            );
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "moviebooking", Version = "v1" });
@@ -43,6 +58,7 @@ namespace moviebooking
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddDbContext<MoviebookingContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddIdentityServices(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,8 +75,9 @@ namespace moviebooking
 
             app.UseRouting();
 
-            app.UseCors(builder => builder.AllowAnyOrigin());
+            app.UseCors("CorsPolicy");
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

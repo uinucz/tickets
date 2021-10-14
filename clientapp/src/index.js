@@ -1,11 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+import React from "react"
+import ReactDOM from "react-dom"
+import App from "./App"
 import "./styles.css"
- 
-ReactDOM.render(
-    <App />
-,
-  document.getElementById('root')
-);
+import { store, StoreContext } from "./Users/store"
+import { createBrowserHistory } from "history"
+import { Router } from "react-router-dom"
 
+export const history = createBrowserHistory()
+
+ReactDOM.render(
+	<StoreContext.Provider value={store}>
+		<App />
+	</StoreContext.Provider>,
+	document.getElementById("root")
+)

@@ -1,12 +1,12 @@
 .active {
-  color: rgb(0, 0, 0);
+	color: rgb(0, 0, 0);
 }
 
-.btn {
+/* .btn {
   border-radius: 0 !important;
-}
+} */
 body {
-  background-color: rgb(255, 255, 255);
+	background-color: rgb(255, 255, 255);
 }
 
 /* #circle {
@@ -17,27 +17,27 @@ body {
 } */
 
 #circle {
-  height: 1vw;
-  width: 1vw;
-  border-radius: 0;
-  border: 2px solid rgb(0, 0, 0);
+	height: 1vw;
+	width: 1vw;
+	border-radius: 50%;
+	background: rgb(160, 225, 255);
 
-  display: inline-block;
-  margin-left: auto;
-  margin-right: auto;
+	display: inline-block;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #circlePicked {
-  height: 1vw;
-  width: 1vw;
-  border-radius: 0;
-  background: rgb(2, 117, 216);
-  display: inline-block;
-  margin-left: auto;
-  margin-right: auto;
+	height: 1vw;
+	width: 1vw;
+	border-radius: 50%;
+	background: rgb(2, 117, 216);
+	display: inline-block;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .theater {
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 }

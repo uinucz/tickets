@@ -28,6 +28,7 @@ namespace moviebooking.Controllers
             _context = context;
         }
 
+        
         [HttpGet]
         [Route("")]
         public IEnumerable<Movie> GetAllBooks() => movieRepository.GetAll();
@@ -45,6 +46,7 @@ namespace moviebooking.Controllers
             return x;
         }
 
+        //[Authorize]
         [HttpGet]
         [Route("{movieId}")]
         public MovieDTO2 GetMovieById(Guid movieId)

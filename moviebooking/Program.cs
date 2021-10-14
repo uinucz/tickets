@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using moviebooking.Data;
+using moviebooking.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +15,7 @@ namespace moviebooking
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
             using (var scope = host.Services.CreateScope())
@@ -23,7 +25,9 @@ namespace moviebooking
                 try
                 {
                     var context = services.GetRequiredService<MoviebookingContext>();
+                    var userManager = services.GetRequiredService<UserManager<User>>();
                     SampleData.Initialize(context);
+                    await Seed.SeedData(context, userManager);
                 }
                 catch (Exception ex)
                 {

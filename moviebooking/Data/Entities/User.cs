@@ -9,7 +9,7 @@ namespace moviebooking.Data.Entities
 {
     public class User : IdentityUser 
     {
-        public override string Id { get; set; }
+        //public override string Id { get; set; }
 
         public ICollection<Booking> Bookings { get; set; }
 
