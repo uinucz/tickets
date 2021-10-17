@@ -6,8 +6,6 @@ import { store, StoreContext } from "./Users/store"
 import { createBrowserHistory } from "history"
 import { Router } from "react-router-dom"
 
-export const history = createBrowserHistory()
-
 ReactDOM.render(
 	<StoreContext.Provider value={store}>
 		<App />

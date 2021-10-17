@@ -50,15 +50,14 @@ namespace moviebooking.Controllers
                 .ToList();
         }
 
+        [Authorize]
         [HttpGet]
         [Route("")]
-        public async Task<IEnumerable<BookingDTOs.BookingDTOforUser>> GetAllBookingForUser()
+        public async Task<IEnumerable<BookingDTOs.BookingDTOforUser>> GetAllBookingsForUser()
         {
-            //var user = await _userManager.GetUserAsync(User);
-            var userId = "368795d3-ae73-4e98-b4fc-86e4aee592bf";
+            var user = await _userManager.GetUserAsync(User);
             return _context.Bookings
-                //.Where(x => x.User.Id == user.Id)
-                .Where(x => x.User.Id == userId)
+                .Where(x => x.User.Id == user.Id)
                 .Select(y => new BookingDTOs.BookingDTOforUser
                 {
                     BookingId = y.Id,
@@ -73,6 +72,7 @@ namespace moviebooking.Controllers
                 .ToList();
         }
 
+        [Authorize]
         [HttpPost]
         [Route("{screeningId}")]
         public async Task addBooking(List<int> seats, Guid screeningId)
@@ -89,7 +89,8 @@ namespace moviebooking.Controllers
                     Seat = seat
                 };
 
-                _context.Bookings.Add(newBooking);
+                if(screening.Bookings.Where(x => x.Seat == seat).Count() == 0)
+                    _context.Bookings.Add(newBooking);
             }            
 
             await _context.SaveChangesAsync();
@@ -98,11 +99,12 @@ namespace moviebooking.Controllers
  
         }
 
+        [Authorize]
         [HttpDelete]
         [Route("{bookingId}")]
         public void deleteBooking(Guid bookingId)
         {
-              _context.Bookings.Remove(_context.Bookings.Find(bookingId));
+            _context.Bookings.Remove(_context.Bookings.Find(bookingId));
             _context.SaveChangesAsync();
         }
     }

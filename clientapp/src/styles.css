@@ -1,5 +1,5 @@
 .active {
-	color: rgb(0, 0, 0);
+	color: rgb(24, 20, 255);
 }
 
 /* .btn {
@@ -8,13 +8,6 @@
 body {
 	background-color: rgb(255, 255, 255);
 }
-
-/* #circle {
-  width: 20px;
-  height: 20px;
-  background: rgb(104, 192, 243);
-  border-radius: 50%;
-} */
 
 #circle {
 	height: 1vw;
@@ -41,6 +34,7 @@ body {
 	height: 1vw;
 	width: 1vw;
 	border-radius: 50%;
+	border: 2px solid rgb(255, 255, 255);
 	background: rgb(0, 0, 0);
 	display: inline-block;
 	margin-left: auto;

@@ -27,7 +27,6 @@ export default function TheaterDate({
 						onClick={() => {
 							handleShow()
 							handleScreeningChosen(x.screeningId)
-							console.log("screening id", x.screeningId)
 						}}
 					>
 						<Moment format="hh:mm">{x.time}</Moment>

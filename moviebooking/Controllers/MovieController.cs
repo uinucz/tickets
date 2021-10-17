@@ -65,14 +65,14 @@ namespace moviebooking.Controllers
                                                 .GroupBy(x => new { x.Time.Day, x.Time.Month, x.Time.Year })
                                                 .AsEnumerable()
                                                  .Select(c => new ScreeningDayDTO2
-                                                {
-                                                    Day = new DateTime(c.Key.Year, c.Key.Month, c.Key.Day),
-                                                    ScreeningTheaters = p.Screenings
+                                                 {
+                                                     Day = new DateTime(c.Key.Year, c.Key.Month, c.Key.Day),
+                                                     ScreeningTheaters = p.Screenings
                                                                     .GroupBy(x => x.Theater)
                                                                     .AsEnumerable()
                                                                     .Select(z => new ScreeningTheaterDTO2
                                                                     {
-                                                                        Theater = new TheaterDTO2 { 
+                                                                        Theater = new TheaterDTO2 {
                                                                             Address = z.Key.Address,
                                                                             Name = z.Key.Name
                                                                         },
@@ -85,15 +85,19 @@ namespace moviebooking.Controllers
                                                                                         })
                                                                                         .Where(t => t.Time.Year == c.Key.Year &&
                                                                                                     t.Time.Month == c.Key.Month &&
-                                                                                                    t.Time.Day == c.Key.Day 
+                                                                                                    t.Time.Day == c.Key.Day
                                                                                                     )
+                                                                                        .OrderBy(x => x.Time) //new line
                                                                                         .ToList()
                                                                     })
                                                                     .ToList()
-                                                })
+                                                 })
+                                                 .OrderBy(x => x.Day) //new line
                                                 .ToList()
-                                               
+                                                
+
                             })
+                            
                             .ToList()
                             .FirstOrDefault();
 

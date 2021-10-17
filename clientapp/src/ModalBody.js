@@ -1,45 +1,67 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios"
-import {
-	Container,
-	Carousel,
-	Card,
-	Button,
-	Modal,
-	Image,
-	Badge,
-} from "react-bootstrap"
-import Moment from "react-moment"
-
+import { Container, Button, Modal } from "react-bootstrap"
 import LeftModal from "./LeftModal"
 import RightModal from "./RightModal"
+import { useStore } from "./Users/store"
 
 export default function ModalBody({ show, handleClose, chosenScreening }) {
+	const { userStore } = useStore()
 	const [bookingData, setBookingData] = useState(null)
-	const [circles, setCircles] = useState(
-		new Array(5).fill(new Array(10).fill(false))
-	)
+	const [circles, setCircles] = useState(null)
+
 	function handleCheck(i, j) {
 		setCircles((circles) => {
 			var x = JSON.parse(JSON.stringify(circles))
-			x[i][j] = !x[i][j]
+			if (x[i][j] === 0) x[i][j] = 1
+			else if (x[i][j] === 1) x[i][j] = 0
 			return x
 		})
-		console.log(circles)
 	}
 	function bookSeats() {
 		var vals = []
 		circles.flat().forEach((x, i) => {
-			if (x) vals.push(i + 1)
+			if (x === 1) vals.push(i)
 		})
-		console.log(vals)
 		if (vals.length != 0) {
-			axios.post(`https://localhost:44377/Booking/${chosenScreening}`, vals)
+			axios
+				.post(`https://localhost:44377/Booking/${chosenScreening}`, vals)
+				.then(() => {
+					let c = []
+					for (let i = 0; i < 5; i++) {
+						c.push([])
+						for (let j = 0; j < 10; j++) {
+							circles[i][j] === 1 ? c[i].push(2) : c[i].push(0)
+						}
+					}
+					setCircles(c)
+				})
 			handleClose()
 		}
 	}
 	useEffect(() => {
-		console.log("chosen screening", chosenScreening)
+		if (chosenScreening) callAPI()
+		function callAPI() {
+			axios
+				.get(`https://localhost:44377/Booking/${chosenScreening}`)
+				.then((res) => {
+					let c = []
+					for (let i = 0; i < 5; i++) {
+						c.push([])
+						for (let j = 0; j < 10; j++) {
+							c[i].push(0)
+						}
+					}
+					res.data.forEach((t) => {
+						var row = parseInt(t.seat / 10)
+						var seat = t.seat % 10
+						c[row][seat] = 2
+					})
+					setCircles(c)
+				})
+		}
+	}, [chosenScreening])
+	useEffect(() => {
 		if (chosenScreening) callApi()
 		function callApi() {
 			axios
@@ -48,7 +70,6 @@ export default function ModalBody({ show, handleClose, chosenScreening }) {
 					setBookingData(res.data)
 				})
 		}
-		console.log("usef")
 	}, [chosenScreening])
 
 	return (
@@ -59,7 +80,7 @@ export default function ModalBody({ show, handleClose, chosenScreening }) {
 			centered
 			size="lg"
 		>
-			{bookingData ? (
+			{bookingData && circles ? (
 				<>
 					<Modal.Body>
 						<Container
@@ -81,8 +102,15 @@ export default function ModalBody({ show, handleClose, chosenScreening }) {
 						<Button variant="dark" onClick={handleClose}>
 							Закрыть
 						</Button>
-						<Button variant="primary" onClick={bookSeats}>
-							Зарезервировать
+						<Button
+							variant={userStore.isLoggedin ? "primary" : "outline-primary"}
+							onClick={userStore.isLoggedin ? bookSeats : () => {}}
+						>
+							{userStore.isLoggedin ? (
+								<>Зарезервировать</>
+							) : (
+								<>Необходима авторизация</>
+							)}
 						</Button>
 					</Modal.Footer>
 				</>

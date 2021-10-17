@@ -8,16 +8,11 @@ export default class UserStore {
 	user = null
 	//token = null
 	appLoaded = false
-	userNumber = 0
 
 	constructor() {
 		makeAutoObservable(this)
 	}
 
-	increase = () => {
-		this.userNumber = this.userNumber += 1
-		console.log(this.userNumber)
-	}
 	get isLoggedin() {
 		return !!this.user
 	}
@@ -28,7 +23,6 @@ export default class UserStore {
 			store.commonStore.setToken(user.token)
 			window.localStorage.setItem("jwt", user.token)
 			runInAction(() => (this.user = user))
-			console.log("logged in")
 		} catch (error) {
 			throw error
 		}
@@ -37,6 +31,16 @@ export default class UserStore {
 		store.commonStore.setToken(null)
 		window.localStorage.removeItem("jwt")
 		this.user = null
+	}
+	register = async (creds) => {
+		try {
+			const user = await userService.register(creds)
+			store.commonStore.setToken(user.token)
+			window.localStorage.setItem("jwt", user.token)
+			runInAction(() => (this.user = user))
+		} catch (error) {
+			throw error
+		}
 	}
 
 	getUser = async () => {

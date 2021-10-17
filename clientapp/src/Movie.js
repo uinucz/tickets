@@ -33,7 +33,6 @@ export default function Movie() {
 				setMovieData(res.data)
 			})
 		}
-		console.log("usef")
 	}, [])
 
 	return (
@@ -45,6 +44,7 @@ export default function Movie() {
 					<DateButtons
 						screeningDays={movieData.screeningDays}
 						handleDateChosen={handleDateChosen}
+						chosenDay={chosenDay}
 					/>
 					<br />
 					{chosenDay &&

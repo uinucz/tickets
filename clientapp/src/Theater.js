@@ -3,17 +3,6 @@ import { Container, Row, Badge } from "react-bootstrap"
 import { nanoid } from "nanoid"
 
 export default function Theater({ circles, handleCheck }) {
-	// const [circles, setCircles] = useState(
-	// 	new Array(5).fill(new Array(10).fill(false))
-	// )
-	// function handleCheck(i, j) {
-	// 	setCircles((circles) => {
-	// 		var x = JSON.parse(JSON.stringify(circles))
-	// 		x[i][j] = !x[i][j]
-	// 		return x
-	// 	})
-	// }
-	//edit
 	return (
 		<Fragment>
 			<Container
@@ -28,10 +17,16 @@ export default function Theater({ circles, handleCheck }) {
 						{x.map((y, j) => (
 							<div
 								key={nanoid()}
-								id={circles[i][j] ? "circlePicked" : "circle"}
+								id={
+									circles[i][j] === 0
+										? "circle"
+										: circles[i][j] === 1
+										? "circlePicked"
+										: "circleReserved"
+								}
 								className="m-1"
 								onClick={() => handleCheck(i, j)}
-								style={{ cursor: "pointer" }}
+								style={{ cursor: circles[i][j] !== 2 ? "pointer" : "default" }}
 							></div>
 						))}
 					</div>
@@ -42,7 +37,7 @@ export default function Theater({ circles, handleCheck }) {
 					{circles.map((x, i) =>
 						x.map((y, j) => {
 							return (
-								circles[i][j] && (
+								circles[i][j] === 1 && (
 									<Badge pill variant="primary" className="mr-2" key={nanoid()}>
 										Ряд {i + 1}, место {j + 1}
 									</Badge>

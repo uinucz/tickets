@@ -10,7 +10,6 @@ axios.interceptors.request.use((config) => {
 
 const login = async (body) => {
 	const response = await axios.post(baseUrl + "/login", body)
-	console.log("loggin in")
 	return response.data
 }
 const register = async (body) => {

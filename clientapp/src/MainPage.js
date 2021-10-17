@@ -15,7 +15,6 @@ export default function MainPage() {
 				.get(`https://localhost:44377/Movie`)
 				.then((res) => setMovies(res.data))
 		}
-		console.log("usef")
 	}, [])
 
 	return (
