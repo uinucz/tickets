@@ -5,6 +5,8 @@ import Moment from "react-moment"
 import { nanoid } from "nanoid"
 import { useStore } from "./Users/store"
 
+const path = process.env.REACT_APP_BOOKING_URL
+
 export default function Tickets() {
 	const [tickets, setTickets] = useState(null)
 	const { userStore } = useStore()
@@ -12,14 +14,12 @@ export default function Tickets() {
 	useEffect(() => {
 		callAPI()
 		function callAPI() {
-			axios
-				.get(`https://localhost:44377/Booking`)
-				.then((res) => setTickets(res.data))
+			axios.get(path).then((res) => setTickets(res.data))
 		}
 	}, [])
 
 	function deleteBooking(id) {
-		axios.delete(`https://localhost:44377/Booking/${id}`)
+		axios.delete(`${path}/${id}`)
 		setTickets((tickets) => tickets.filter((t) => t.bookingId != id))
 	}
 

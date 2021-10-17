@@ -1,6 +1,7 @@
 import axios from "axios"
 import { store } from "./store"
-const baseUrl = "https://localhost:44377/Account"
+
+const baseUrl = process.env.REACT_APP_ACCOUNT_URL
 
 axios.interceptors.request.use((config) => {
 	const token = store.commonStore.token

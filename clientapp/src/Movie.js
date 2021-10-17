@@ -8,6 +8,8 @@ import MovieData from "./MovieData"
 import DateButtons from "./DateButtons"
 import TheaterDate from "./TheaterDate"
 
+const path = process.env.REACT_APP_MOVIE_URL
+
 export default function Movie() {
 	const [movieData, setMovieData] = useState(null)
 	const [chosenDay, setChosenDay] = useState(null)
@@ -29,7 +31,7 @@ export default function Movie() {
 			callApi()
 		}
 		function callApi() {
-			axios.get(`https://localhost:44377/Movie/${id}`).then((res) => {
+			axios.get(`${path}/${id}`).then((res) => {
 				setMovieData(res.data)
 			})
 		}

@@ -5,6 +5,10 @@ import LeftModal from "./LeftModal"
 import RightModal from "./RightModal"
 import { useStore } from "./Users/store"
 
+const pathBooking = process.env.REACT_APP_BOOKING_URL
+const pathScreening = process.env.REACT_APP_SCREENING_URL
+console.log(pathBooking, pathScreening)
+
 export default function ModalBody({ show, handleClose, chosenScreening }) {
 	const { userStore } = useStore()
 	const [bookingData, setBookingData] = useState(null)
@@ -23,52 +27,46 @@ export default function ModalBody({ show, handleClose, chosenScreening }) {
 		circles.flat().forEach((x, i) => {
 			if (x === 1) vals.push(i)
 		})
-		if (vals.length != 0) {
-			axios
-				.post(`https://localhost:44377/Booking/${chosenScreening}`, vals)
-				.then(() => {
-					let c = []
-					for (let i = 0; i < 5; i++) {
-						c.push([])
-						for (let j = 0; j < 10; j++) {
-							circles[i][j] === 1 ? c[i].push(2) : c[i].push(0)
-						}
+		if (vals.length !== 0) {
+			axios.post(`${pathBooking}/${chosenScreening}`, vals).then(() => {
+				let c = []
+				for (let i = 0; i < 5; i++) {
+					c.push([])
+					for (let j = 0; j < 10; j++) {
+						circles[i][j] === 1 ? c[i].push(2) : c[i].push(0)
 					}
-					setCircles(c)
-				})
+				}
+				setCircles(c)
+			})
 			handleClose()
 		}
 	}
 	useEffect(() => {
 		if (chosenScreening) callAPI()
 		function callAPI() {
-			axios
-				.get(`https://localhost:44377/Booking/${chosenScreening}`)
-				.then((res) => {
-					let c = []
-					for (let i = 0; i < 5; i++) {
-						c.push([])
-						for (let j = 0; j < 10; j++) {
-							c[i].push(0)
-						}
+			axios.get(`${pathBooking}/${chosenScreening}`).then((res) => {
+				let c = []
+				for (let i = 0; i < 5; i++) {
+					c.push([])
+					for (let j = 0; j < 10; j++) {
+						c[i].push(0)
 					}
-					res.data.forEach((t) => {
-						var row = parseInt(t.seat / 10)
-						var seat = t.seat % 10
-						c[row][seat] = 2
-					})
-					setCircles(c)
+				}
+				res.data.forEach((t) => {
+					var row = parseInt(t.seat / 10)
+					var seat = t.seat % 10
+					c[row][seat] = 2
 				})
+				setCircles(c)
+			})
 		}
 	}, [chosenScreening])
 	useEffect(() => {
 		if (chosenScreening) callApi()
 		function callApi() {
-			axios
-				.get(`https://localhost:44377/Screening/${chosenScreening}`)
-				.then((res) => {
-					setBookingData(res.data)
-				})
+			axios.get(`${pathScreening}/${chosenScreening}`).then((res) => {
+				setBookingData(res.data)
+			})
 		}
 	}, [chosenScreening])
 

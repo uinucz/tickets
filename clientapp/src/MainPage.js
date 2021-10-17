@@ -5,15 +5,16 @@ import { nanoid } from "nanoid"
 import ModalBody from "./ModalBody"
 import { Link } from "react-router-dom"
 
+const path = process.env.REACT_APP_MOVIE_URL
+console.log("this is path", path)
+
 export default function MainPage() {
 	const [movies, setMovies] = useState([])
 
 	useEffect(() => {
 		callApi()
 		function callApi() {
-			axios
-				.get(`https://localhost:44377/Movie`)
-				.then((res) => setMovies(res.data))
+			axios.get(path).then((res) => setMovies(res.data))
 		}
 	}, [])
 
