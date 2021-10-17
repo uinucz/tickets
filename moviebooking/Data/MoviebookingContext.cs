@@ -47,15 +47,6 @@ namespace moviebooking.Data
 
 
 
-            //modelBuilder.Entity<Screening>()
-            //    .HasOne(p => p.Theater)
-            //    .WithMany(p => p.Screenings);
-
-            //modelBuilder.Entity<Screening>()
-            //    .HasOne(p => p.Movie)
-            //    .WithMany(p => p.Screenings);
-
-
 
         }
 

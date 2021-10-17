@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import MainPage from "./MainPage"
 import Movie from "./Movie"
 import LoginForm from "./Users/LoginForm"
+import Tickets from "./Tickets"
 import { useStore } from "./Users/store"
 import { observer } from "mobx-react-lite"
 
@@ -23,11 +24,11 @@ function App() {
 			<br />
 
 			<Switch>
-				<Route Route path="/movies/:id">
+				<Route path="/movies/:id">
 					<Movie />
 				</Route>
 				<Route path="/tickets">
-					<MainPage />
+					<Tickets />
 				</Route>
 				<Route path="/account">
 					<LoginForm />

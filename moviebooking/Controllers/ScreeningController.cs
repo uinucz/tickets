@@ -10,8 +10,7 @@ using moviebooking.Repositories;
 using moviebooking.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System.Data.Entity.Core.Objects;
-
+ 
 namespace moviebooking.Controllers
 {
     [ApiController]

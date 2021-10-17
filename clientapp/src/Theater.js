@@ -2,17 +2,17 @@ import React, { Fragment, useState } from "react"
 import { Container, Row, Badge } from "react-bootstrap"
 import { nanoid } from "nanoid"
 
-export default function Theater() {
-	const [circles, setCircles] = useState(
-		new Array(5).fill(new Array(10).fill(false))
-	)
-	function handleCheck(i, j) {
-		setCircles((circles) => {
-			var x = JSON.parse(JSON.stringify(circles))
-			x[i][j] = !x[i][j]
-			return x
-		})
-	}
+export default function Theater({ circles, handleCheck }) {
+	// const [circles, setCircles] = useState(
+	// 	new Array(5).fill(new Array(10).fill(false))
+	// )
+	// function handleCheck(i, j) {
+	// 	setCircles((circles) => {
+	// 		var x = JSON.parse(JSON.stringify(circles))
+	// 		x[i][j] = !x[i][j]
+	// 		return x
+	// 	})
+	// }
 	//edit
 	return (
 		<Fragment>

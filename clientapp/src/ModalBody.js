@@ -16,7 +16,28 @@ import RightModal from "./RightModal"
 
 export default function ModalBody({ show, handleClose, chosenScreening }) {
 	const [bookingData, setBookingData] = useState(null)
-	const [chosenSeats, setChosenSeats] = useState([])
+	const [circles, setCircles] = useState(
+		new Array(5).fill(new Array(10).fill(false))
+	)
+	function handleCheck(i, j) {
+		setCircles((circles) => {
+			var x = JSON.parse(JSON.stringify(circles))
+			x[i][j] = !x[i][j]
+			return x
+		})
+		console.log(circles)
+	}
+	function bookSeats() {
+		var vals = []
+		circles.flat().forEach((x, i) => {
+			if (x) vals.push(i + 1)
+		})
+		console.log(vals)
+		if (vals.length != 0) {
+			axios.post(`https://localhost:44377/Booking/${chosenScreening}`, vals)
+			handleClose()
+		}
+	}
 	useEffect(() => {
 		console.log("chosen screening", chosenScreening)
 		if (chosenScreening) callApi()
@@ -48,7 +69,7 @@ export default function ModalBody({ show, handleClose, chosenScreening }) {
 							}}
 						>
 							<LeftModal bookingData={bookingData} />
-							<RightModal />
+							<RightModal circles={circles} handleCheck={handleCheck} />
 						</Container>
 					</Modal.Body>
 					<Modal.Footer
@@ -60,7 +81,7 @@ export default function ModalBody({ show, handleClose, chosenScreening }) {
 						<Button variant="dark" onClick={handleClose}>
 							Закрыть
 						</Button>
-						<Button variant="primary" onClick={handleClose}>
+						<Button variant="primary" onClick={bookSeats}>
 							Зарезервировать
 						</Button>
 					</Modal.Footer>

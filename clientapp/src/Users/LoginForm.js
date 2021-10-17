@@ -24,7 +24,10 @@ export default observer(function LoginForm() {
 					error: "null",
 				}}
 				onSubmit={(values, { setErrors }) =>
-					userStore.login(values).catch((error) => setErrors({ error: "fail" }))
+					userStore.login(values).catch((error) => {
+						setErrors({ error: "fail" })
+						console.log(error)
+					})
 				}
 			>
 				{({ handleSubmit, isSubmitting, errors }) => (
@@ -35,9 +38,9 @@ export default observer(function LoginForm() {
 							name="error"
 							render={() => <Alert variant="primary">{errors.error}</Alert>}
 						/>
-						
+
 						<Button variant="success" type="submit">
-						{isSubmitting ? <>...</>:<>войти</>}
+							{isSubmitting ? <>...</> : <>войти</>}
 						</Button>
 					</Form>
 				)}

@@ -37,6 +37,16 @@ body {
 	margin-right: auto;
 }
 
+#circleReserved {
+	height: 1vw;
+	width: 1vw;
+	border-radius: 50%;
+	background: rgb(0, 0, 0);
+	display: inline-block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 .theater {
 	display: flex;
 	align-items: center;

@@ -18,6 +18,8 @@ using moviebooking.Repositories;
 using moviebooking.Extensions;
  using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using moviebooking.Data.Entities;
 
 namespace moviebooking
 {
@@ -59,6 +61,13 @@ namespace moviebooking
             services.AddDbContext<MoviebookingContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentityServices(Configuration);
+            //services.AddIdentity<User, IdentityRole>(cfg =>
+            //{
+            //    cfg.User.RequireUniqueEmail = true;
+            //})
+            //    .AddEntityFrameworkStores<MoviebookingContext>()
+            //    .AddDefaultTokenProviders();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
